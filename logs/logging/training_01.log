@@ -1,0 +1,22 @@
+2025-09-23 23:53:09,089 - TrainerVISKAN - INFO - Training initialized with batch_size=16, lr=0.0001, num_epochs=50, optimizer=Adam, model=VisionSKANformer
+2025-09-23 23:56:13,224 - TrainerVISKAN - INFO - Epoch 1/50: Train Loss=1.8935, Train Acc=0.2524, Val Loss=1.6395, Val Acc=0.3802, LR=0.000100
+2025-09-23 23:59:19,211 - TrainerVISKAN - INFO - Epoch 2/50: Train Loss=1.4718, Train Acc=0.4270, Val Loss=1.3566, Val Acc=0.4720, LR=0.000095
+2025-09-24 00:03:18,487 - TrainerVISKAN - INFO - Epoch 3/50: Train Loss=1.3161, Train Acc=0.5009, Val Loss=1.2955, Val Acc=0.5298, LR=0.000090
+2025-09-24 00:07:02,432 - TrainerVISKAN - INFO - Epoch 4/50: Train Loss=1.2213, Train Acc=0.5363, Val Loss=1.2437, Val Acc=0.5253, LR=0.000086
+2025-09-24 00:10:51,237 - TrainerVISKAN - INFO - Epoch 5/50: Train Loss=1.1502, Train Acc=0.5659, Val Loss=1.2992, Val Acc=0.5129, LR=0.000081
+2025-09-24 00:14:44,806 - TrainerVISKAN - INFO - Epoch 6/50: Train Loss=1.1004, Train Acc=0.5810, Val Loss=1.2839, Val Acc=0.5092, LR=0.000077
+2025-09-24 00:18:40,453 - TrainerVISKAN - INFO - Epoch 7/50: Train Loss=1.0580, Train Acc=0.5932, Val Loss=1.3078, Val Acc=0.5193, LR=0.000074
+2025-09-24 00:22:26,018 - TrainerVISKAN - INFO - Epoch 8/50: Train Loss=1.0374, Train Acc=0.6069, Val Loss=1.1198, Val Acc=0.5877, LR=0.000070
+2025-09-24 00:26:01,003 - TrainerVISKAN - INFO - Epoch 9/50: Train Loss=1.0089, Train Acc=0.6145, Val Loss=1.0710, Val Acc=0.6079, LR=0.000066
+2025-09-24 00:29:38,530 - TrainerVISKAN - INFO - Epoch 10/50: Train Loss=0.9792, Train Acc=0.6250, Val Loss=1.0487, Val Acc=0.6001, LR=0.000063
+2025-09-24 00:32:41,384 - TrainerVISKAN - INFO - Epoch 11/50: Train Loss=0.9565, Train Acc=0.6363, Val Loss=1.2309, Val Acc=0.5519, LR=0.000060
+2025-09-24 00:35:41,904 - TrainerVISKAN - INFO - Epoch 12/50: Train Loss=0.9338, Train Acc=0.6449, Val Loss=1.1287, Val Acc=0.5886, LR=0.000057
+2025-09-24 00:38:41,440 - TrainerVISKAN - INFO - Epoch 13/50: Train Loss=0.9101, Train Acc=0.6544, Val Loss=1.0102, Val Acc=0.6171, LR=0.000054
+2025-09-24 00:41:40,331 - TrainerVISKAN - INFO - Epoch 14/50: Train Loss=0.8988, Train Acc=0.6634, Val Loss=0.9253, Val Acc=0.6543, LR=0.000051
+2025-09-24 00:44:39,464 - TrainerVISKAN - INFO - Epoch 15/50: Train Loss=0.8805, Train Acc=0.6674, Val Loss=0.9498, Val Acc=0.6414, LR=0.000049
+2025-09-24 00:47:37,832 - TrainerVISKAN - INFO - Epoch 16/50: Train Loss=0.8732, Train Acc=0.6711, Val Loss=1.1103, Val Acc=0.5854, LR=0.000046
+2025-09-24 00:50:37,106 - TrainerVISKAN - INFO - Epoch 17/50: Train Loss=0.8694, Train Acc=0.6739, Val Loss=0.9889, Val Acc=0.6180, LR=0.000044
+2025-09-24 00:53:36,652 - TrainerVISKAN - INFO - Epoch 18/50: Train Loss=0.8423, Train Acc=0.6836, Val Loss=1.0849, Val Acc=0.5946, LR=0.000042
+2025-09-24 00:56:36,044 - TrainerVISKAN - INFO - Epoch 19/50: Train Loss=0.8266, Train Acc=0.6891, Val Loss=0.9963, Val Acc=0.6368, LR=0.000040
+2025-09-24 00:56:36,046 - TrainerVISKAN - INFO - Early stopping triggered
+2025-09-24 00:57:00,409 - TrainerVISKAN - INFO - Test results - Loss: 0.9820, Accuracy: 0.6397
