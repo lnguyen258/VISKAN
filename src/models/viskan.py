@@ -193,19 +193,37 @@ class Encoder(nn.Module):
     """    
     def __init__(self, embed_dim, n_attention_heads, forward_mul, dropout=0.0):
         super().__init__()
-        self.norm1      = nn.LayerNorm(embed_dim)
-        self.attention  = SelfAttention(embed_dim, n_attention_heads)
-        self.dropout1   = nn.Dropout(dropout)
+        self.norm1 = nn.LayerNorm(embed_dim)
+        self.attention = SelfAttention(embed_dim, n_attention_heads)
+        self.dropout1 = nn.Dropout(dropout)
         
-        self.norm2      = nn.LayerNorm(embed_dim)
-        self.fc1        = nn.Linear(embed_dim, embed_dim * forward_mul)
+        self.norm2 = nn.LayerNorm(embed_dim)
+        self.fc1 = nn.Linear(embed_dim, embed_dim * forward_mul)
         self.activation = nn.GELU()
-        self.fc2        = nn.Linear(embed_dim * forward_mul, embed_dim)
-        self.dropout2   = nn.Dropout(dropout)
+        self.fc2 = nn.Linear(embed_dim * forward_mul, embed_dim)
+        self.dropout2 = nn.Dropout(dropout)
 
     def forward(self, x):
         x = x + self.dropout1(self.attention(self.norm1(x)))                                # Skip connections
         x = x + self.dropout2(self.fc2(self.activation(self.fc1(self.norm2(x)))))           # Skip connections
+        return x
+    
+class Encoder_SineKAN(nn.Module):
+    def __init__(self, embed_dim, n_attention_heads, forward_mul, dropout=0.0):
+        super().__init__()
+        self.norm1 = nn.LayerNorm(embed_dim)
+        self.attention = SelfAttention(embed_dim, n_attention_heads)
+        self.dropout1 = nn.Dropout(dropout)
+        
+        self.norm2 = nn.LayerNorm(embed_dim)
+        self.fc1 = nn.Linear(embed_dim, embed_dim * forward_mul)
+        self.activation = nn.GELU()
+        self.skan = SineKANLayer(embed_dim * forward_mul, embed_dim)
+        self.dropout2 = nn.Dropout(dropout)
+
+    def forward(self, x):
+        x = x + self.dropout1(self.attention(self.norm1(x)))                                # Skip connections
+        x = x + self.dropout2(self.skan(self.activation(self.fc1(self.norm2(x)))))           # Skip connections
         return x
     
 class Classifier(nn.Module):
@@ -259,12 +277,13 @@ class VisionSKANformer(nn.Module):
     Returns:
         Tensor: Logits of shape B, CL
     """    
-    def __init__(self, n_channels = 3, embed_dim = 128, n_layers = 4, n_attention_heads = 8, forward_mul = 4, image_size = 32, patch_size = 4, n_classes = 10, dropout=0.2):
+    def __init__(self, n_channels = 3, embed_dim = 64, n_layers = 4, n_attention_heads = 8, forward_mul = 4, image_size = 32, patch_size = 4, n_classes = 10, dropout=0.1):
         super().__init__()
         self.embedding  = EmbedLayer(n_channels, embed_dim, image_size, patch_size, dropout)
-        self.encoder    = nn.ModuleList([Encoder(embed_dim, n_attention_heads, forward_mul, dropout) for _ in range(n_layers)])
-        self.norm       = nn.LayerNorm(embed_dim)  
-        self.skan = SineKANLayer(embed_dim, embed_dim, device='cuda', grid_size=5, is_first=True, add_bias=True, norm_freq=True)                                        
+        self.encoder = nn.ModuleList([Encoder(embed_dim, n_attention_heads, forward_mul, dropout) for _ in range(n_layers - 1)])
+        self.skan_encoder = Encoder_SineKAN(embed_dim, n_attention_heads, forward_mul, dropout)
+        self.encoder.append(self.skan_encoder)
+        self.norm = nn.LayerNorm(embed_dim)                                         
         self.classifier = Classifier(embed_dim, n_classes)
 
         self.apply(vit_init_weights)                                                
@@ -274,7 +293,6 @@ class VisionSKANformer(nn.Module):
         for block in self.encoder:
             x = block(x)
         x = self.norm(x)
-        x = self.skan(x)
         x = self.classifier(x)
         return x
     
