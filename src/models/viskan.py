@@ -216,14 +216,17 @@ class Encoder_SineKAN(nn.Module):
         self.dropout1 = nn.Dropout(dropout)
         
         self.norm2 = nn.LayerNorm(embed_dim)
-        self.fc1 = nn.Linear(embed_dim, embed_dim * forward_mul)
-        self.activation = nn.GELU()
-        self.skan = SineKANLayer(embed_dim * forward_mul, embed_dim)
+        # self.fc1 = nn.Linear(embed_dim, embed_dim * forward_mul)
+        # self.activation = nn.GELU()
+        # self.skan = SineKANLayer(embed_dim * forward_mul, embed_dim)
+        self.skan = SineKANLayer(embed_dim, embed_dim)
         self.dropout2 = nn.Dropout(dropout)
 
     def forward(self, x):
-        x = x + self.dropout1(self.attention(self.norm1(x)))                                # Skip connections
-        x = x + self.dropout2(self.skan(self.activation(self.fc1(self.norm2(x)))))           # Skip connections
+        # x = x + self.dropout1(self.attention(self.norm1(x)))                                # Skip connections
+        # x = x + self.dropout2(self.skan(self.activation(self.fc1(self.norm2(x)))))           # Skip connections
+        x = x + self.dropout1(self.attention(self.norm1(x)))
+        x = self.dropout2(self.skan(self.norm2(x)))
         return x
     
 class Classifier(nn.Module):
